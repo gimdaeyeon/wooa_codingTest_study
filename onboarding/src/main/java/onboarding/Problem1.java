@@ -29,8 +29,8 @@ class Problem1 {
         int pobiResult;
         int crongResult;
         try {
-            pobiResult = new Pages(pobi).getBiggerResult();
-            crongResult = new Pages(crong).getBiggerResult();
+            pobiResult = new Pages(pobi).getScore();
+            crongResult = new Pages(crong).getScore();
         } catch (ImpossiblePageException e) {
             return EXCEPTION_CASE;
         }
@@ -73,7 +73,7 @@ class Problem1 {
         }
 
         //        최종적으로 밖으로 보여질 메소드 입력받은 리스트
-        public int getBiggerResult(){
+        public int getScore(){
             return Math.max(getBiggerValue(LEFT_PAGE),getBiggerValue(RIGHT_PAGE));
         }
 
