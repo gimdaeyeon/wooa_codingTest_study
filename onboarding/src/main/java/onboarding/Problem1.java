@@ -1,9 +1,11 @@
 package onboarding;
 
 import com.sun.net.httpserver.HttpServer;
+import exceptions.ImpossiblePageException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
 
 /*
 * 1. 책을 임의로 펼친다.
@@ -21,15 +23,36 @@ class Problem1 {
     public static final int POBI_WIN_CASE =1;
     public static final int CRONG_WIN_CASE =2;
     public static final int TIE_CASE = 0;
-    public static final int EXCEPTION_CASE = 0;
+    public static final int EXCEPTION_CASE = -1;
 
     public static int solution(List<Integer> pobi, List<Integer> crong) {
-        int answer = Integer.MAX_VALUE;
-        Pages pobiPages = new Pages(pobi);
-        Pages crongPages = new Pages(crong);
+        int pobiResult;
+        int crongResult;
+        try {
+            pobiResult = new Pages(pobi).getBiggerResult();
+            crongResult = new Pages(crong).getBiggerResult();
+        } catch (ImpossiblePageException e) {
+            return EXCEPTION_CASE;
+        }
 
-        return answer;
+        if(isPobiWin(pobiResult,crongResult)){
+            return POBI_WIN_CASE;
+        }
+        if(isCrongWin(pobiResult,crongResult)){
+            return CRONG_WIN_CASE;
+        }
+        return TIE_CASE;
     }
+
+    static boolean isPobiWin(int pobi, int crong){
+        return pobi>crong;
+    }
+    static boolean isCrongWin(int pobi, int crong){
+        return pobi<crong;
+    }
+
+
+
 
     static class Pages{
         private final int PAGE_LENGTH = 2;
@@ -39,19 +62,29 @@ class Problem1 {
 
         private final List<Integer> list;
 
-        public Pages(List<Integer> list){
+        public Pages(List<Integer> list) throws ImpossiblePageException {
             this.list =list;
-            this.LEFT_PAGE = list.get(0);
-            this.RIGHT_PAGE = list.get(1);
+            LEFT_PAGE = list.get(0);
+            RIGHT_PAGE = list.get(1);
+
+            if(LEFT_PAGE-RIGHT_PAGE != -1){
+                throw new ImpossiblePageException("나올 수 없는 페이지 번호들입니다");
+            }
         }
 
-//        최종적으로 밖으로 보여질 메소드 입력받은 리스트
-        public int getBiggerValue(List<Integer> list){
-
-            return 0;
+        //        최종적으로 밖으로 보여질 메소드 입력받은 리스트
+        public int getBiggerResult(){
+            return Math.max(getBiggerValue(LEFT_PAGE),getBiggerValue(RIGHT_PAGE));
         }
 
-        public static List<Integer> getExtractDigits(int number){
+//
+        private int getBiggerValue(int number){
+            List<Integer> digits = getExtractDigits(number);
+            return Math.max(getPlusValue(digits),getMultipliedValue(digits));
+        }
+
+//        입력받은 숫자를 각 자리수로 분리한 리스트르 반환하는 메소드
+        private List<Integer> getExtractDigits(int number){
             List<Integer> digits = new ArrayList<>();
             while(number !=0){
                 int digit = number%10;
@@ -61,8 +94,19 @@ class Problem1 {
             return digits;
         }
 
+//        분리된 숫자들을 모두 더하거나 곱하고 큰 수를 반환
 
-
+//        각 자릿 수를 모두 더한 값
+        private int getPlusValue(List<Integer> digits){
+            return digits.stream()
+                    .mapToInt(i->i)
+                    .sum();
+        }
+//        각 자릿 수를 모두 곱한 값
+        private int getMultipliedValue(List<Integer> digits){
+            return digits.stream()
+                         .reduce(1,(i,j)->i*j);
+        }
 
     }
 

@@ -35,11 +35,6 @@ class ApplicationTest {
             assertThat(Problem1.solution(pobi, crong)).isEqualTo(result);
         }
 
-        @Test
-        void ExtractDigitsTest() {
-            assertThat(Problem1.Pages.getExtractDigits(421)).contains(4,2,1);
-        }
-
 
     }
 
