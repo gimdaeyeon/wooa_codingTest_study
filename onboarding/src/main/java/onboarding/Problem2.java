@@ -14,29 +14,26 @@ public class Problem2 {
         String answer = cryptogram;
         boolean isChange = true;
         boolean isDuplicate = false;
+        char checkChar =' ';
         StringBuilder sb = new StringBuilder();
 
         while(isChange){
             isChange = false;
-            isDuplicate = false;
-            for (int i = 0; i < answer.length()-1; i++) {
-                System.out.println(i+": "+ answer);
-                if(isDuplicate){
-                    isDuplicate = false;
+            for (int i = 0; i < answer.length(); i++) {
+//               맨 처음문자는 일단 추가시킨다.
+                if(i == 0){
+                    sb.append(answer.charAt(i));
                     continue;
                 }
                 char c = answer.charAt(i);
+                int sbLeng = sb.length();
 
-                if(c == answer.charAt(i+1)){
+                if(c == sb.charAt(sbLeng-1)){
+                    sb.delete(sbLeng-1,sbLeng);
                     isChange = true;
-                    isDuplicate = true;
                     continue;
                 }
                 sb.append(c);
-                if(i==answer.length()-1){
-                    sb.append(answer.charAt(i+1));
-                }
-                System.out.println(sb.toString());
             }
             answer = sb.toString();
             sb.setLength(0);
@@ -45,3 +42,16 @@ public class Problem2 {
         return answer;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
