@@ -20,26 +20,56 @@ import java.util.Stack;
 * */
 public class Problem2 {
 
-    public static Stack<Character> charStack = new Stack<>();
 
     public static String solution(String cryptogram) {
-
-        processCharArray(cryptogram.toCharArray());
-
-        return "";
+        return new Characters().getResult(cryptogram.toCharArray());
     }
 
-    public static void processCharArray(char[] charArr){
+    static class Characters{
 
-        for(char ch: charArr){
-            stackingCharInStack(ch);
+        private Stack<Character> charStack = new Stack<>();
+
+        private void processCharArray(char[] charArr){
+            for(char ch: charArr){
+                stackingCharInStack(ch);
+            }
         }
 
+        private void stackingCharInStack(char ch){
+            if(charStack.isEmpty()){
+                charStack.push(ch);
+                return;
+            }
+            pushOrPopStack(ch);
+        }
+
+        private void pushOrPopStack(char ch){
+            if(isSameCharacter(ch)){
+                charStack.pop();
+                return;
+            }
+            charStack.push(ch);
+        }
+
+        private boolean isSameCharacter(char ch){
+            return charStack.peek() == ch;
+        }
+
+        public  String getResult(char[] charArr){
+            processCharArray(charArr);
+
+            StringBuilder sb = new StringBuilder();
+
+            for(char ch: charStack){
+                sb.append(ch);
+            }
+            return sb.toString();
+        }
+
+
     }
 
-    public static void stackingCharInStack(char ch){
 
-    }
 
 
 
