@@ -20,7 +20,13 @@ import java.util.Stack;
 * */
 public class Problem2 {
 
-
+/*
+* 스택을 사용해서 구현자체는 완료해다.
+* 문제를 푸는 것 자체는 크게 어렵지 않지만
+* 메소드를 기능단위로 분리하고
+* 분리한 메소드의 이름을 정하는 작업이 아직 익숙하지 않아서인지
+* 쉽지 않은 것 같다.
+* */
     public static String solution(String cryptogram) {
         return new Characters().getResult(cryptogram.toCharArray());
     }
