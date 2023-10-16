@@ -6,8 +6,8 @@ import java.util.Map;
 
 public class Problem4 {
     public static String solution(String word) {
-        String answer = "";
-        return answer;
+        Alphabet alphabet = Alphabet.of();
+        return alphabet.getTreeFrogsAnswer(word);
     }
 
     static class Alphabet{
@@ -31,6 +31,21 @@ public class Problem4 {
         }
         private boolean isAlphabet(char ch){
             return (ch>='a'&& 'z'>= ch)|| (ch>='A'&& 'Z'>= ch);
+        }
+
+        public String getTreeFrogsAnswer(String momsWords){
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < momsWords.length() ; i++) {
+                sb.append(convertingCharacter(momsWords.charAt(i)));
+            }
+            return sb.toString();
+        }
+
+        private char convertingCharacter(char ch){
+            if(isAlphabet(ch)){
+                return map.get(ch);
+            }
+            return ch;
         }
 
 
