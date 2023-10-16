@@ -7,49 +7,61 @@ import java.util.List;
 public class Problem5 {
     public static List<Integer> solution(int money) {
         Cashs cashs = Cashs.of(money);
+
+        System.out.println(cashs.list.size());
         return cashs.withDrawCash();
     }
 }
 
-class Cashs{
-    private List<Integer> list;
+class Cashs {
+    public List<Integer> list;
 
     private Cashs(List<Integer> list, int money) {
         this.list = list;
+        setUpList();
         toBanknote(money);
     }
-    public static Cashs of(int money){
-        Cashs cashs = new Cashs(new ArrayList<Integer>(BANKNOTES.values().length), money);
+
+    private void setUpList() {
+        for (int i = 0; i < BANKNOTES.values().length; i++) {
+            list.add(0);
+        }
+    }
+
+    public static Cashs of(int money) {
+        Cashs cashs = new Cashs(new ArrayList<Integer>(), money);
         return cashs;
     }
 
-    public List<Integer> withDrawCash(){
+    public List<Integer> withDrawCash() {
         return list;
     }
 
     /*
-    * 이 메소드 안에서 각 현금별로 for 문을 돌린다.
-    * 각 현금의 값으로 while문을 돌려 해당 지폐가 몇개 필요한지 구해서 list에 추가하고,
-    * 해당 지폐로 변환하고 남은 돈을 반환한다
-    * */
-    public void toBanknote(int money){
-        for(BANKNOTES banknote: BANKNOTES.values()){
-
+     * 이 메소드 안에서 각 현금별로 for 문을 돌린다.
+     * 각 현금의 값으로 while문을 돌려 해당 지폐가 몇개 필요한지 구해서 list에 추가하고,
+     * 해당 지폐로 변환하고 남은 돈을 반환한다
+     * */
+    public void toBanknote(int money) {
+        for (BANKNOTES banknote : BANKNOTES.values()) {
+            money = countingBanknotesAndReturnRest(banknote, money);
         }
     }
 
-
+    private int countingBanknotesAndReturnRest(BANKNOTES banknote, int money) {
+        list.set(banknote.getIndex(), money/banknote.getValue());
+        return money % banknote.getValue();
+    }
 
 
 }
 
 
-
-enum BANKNOTES{
-    BANKNOTE50000(0,50000), BANKNOTE10000(1,10000),
-    BANKNOTE5000(2,5000), BANKNOTE1000(3,1000),
-    BANKNOTE500(4,500), BANKNOTE100(5,100),
-    BANKNOTE50(6,50), BANKNOTE10(7,10), BANKNOTE1(8,1);
+enum BANKNOTES {
+    BANKNOTE50000(0, 50000), BANKNOTE10000(1, 10000),
+    BANKNOTE5000(2, 5000), BANKNOTE1000(3, 1000),
+    BANKNOTE500(4, 500), BANKNOTE100(5, 100),
+    BANKNOTE50(6, 50), BANKNOTE10(7, 10), BANKNOTE1(8, 1);
     private int index;
     private int value;
 
@@ -57,6 +69,7 @@ enum BANKNOTES{
         this.index = index;
         this.value = value;
     }
+
     public int getValue() {
         return value;
     }
