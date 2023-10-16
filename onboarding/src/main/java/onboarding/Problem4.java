@@ -29,6 +29,9 @@ public class Problem4 {
                 map.put((char)i, (char)(start*2+25-i));
             }
         }
+        private boolean isAlphabet(char ch){
+            return (ch>='a'&& 'z'>= ch)|| (ch>='A'&& 'Z'>= ch);
+        }
 
 
     }
