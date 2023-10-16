@@ -11,7 +11,39 @@ import java.util.stream.IntStream;
 */
 public class Problem3 {
     public static int solution(int number) {
-        int answer = 0;
-        return answer;
+        return new Problem3().getResult(number);
     }
+
+    public  int getResult(int end){
+        int count = 0;
+
+        for (int i = 1; i <= end ; i++) {
+            count += countNumberOf3or6or9(i);
+        }
+        return count;
+    }
+
+    private int countNumberOf3or6or9(int number){
+        int count = 0;
+        while(number!=0){
+            count += is3or6or9(number%10);
+            number /= 10;
+        }
+        return count;
+    }
+
+    private int is3or6or9(int number){
+        if(number==3||number==6||number==9){
+            return 1;
+        };
+        return 0;
+    }
+
+
+
 }
+
+
+
+
+
