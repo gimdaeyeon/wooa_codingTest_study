@@ -5,7 +5,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Problem7 {
-    public static Map<String,Integer> scoreMap = new HashMap<>();
+    public static Map<String,Integer> scoreMap = new TreeMap<>();
     public static List<String> friendList = new ArrayList<>();
     public static final int DEFAULT_SCORE = 0;
 
@@ -19,7 +19,9 @@ public class Problem7 {
         calculateMutualFriendScore(user,friends);
         calculateVisitPoints(visitors);
 
-        
+//        만들어진 scoreMap을 점수에 따라 정렬 후 key의 List로 반환하기
+        List<String> recommendList  = sortMapByScore(scoreMap);
+
 
         return null;
     }
@@ -81,6 +83,15 @@ public class Problem7 {
             scoreMap.put(target,scoreMap.get(target)+1);
         }
 
+    }
+
+    public static List<String> sortMapByScore(Map<String,Integer> map){
+        List<String> list = new ArrayList<>(map.keySet());
+
+//        list.sort();
+
+
+        return null;
     }
 
 
