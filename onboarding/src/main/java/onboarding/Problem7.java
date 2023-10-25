@@ -23,7 +23,7 @@ public class Problem7 {
         List<String> recommendList  = sortMapByScore(scoreMap);
 
 
-        return null;
+        return recommendList;
     }
 
     public static void makeUsersFriendList(String user, List<List<String>> friends ){
@@ -79,7 +79,14 @@ public class Problem7 {
     }
 
     public static void calculateVisitPoints(List<String> visitors){
+        System.out.println(scoreMap);
         for(String target:visitors){
+            if(friendList.contains(target)){
+                continue;
+            }
+            if (!scoreMap.containsKey(target)){
+                scoreMap.put(target,1);
+            }
             scoreMap.put(target,scoreMap.get(target)+1);
         }
 
@@ -88,10 +95,9 @@ public class Problem7 {
     public static List<String> sortMapByScore(Map<String,Integer> map){
         List<String> list = new ArrayList<>(map.keySet());
 
-//        list.sort();
+        list.sort((o1, o2) -> map.get(o2).compareTo(map.get(o1)));
 
-
-        return null;
+        return list.stream().limit(5).collect(Collectors.toList());
     }
 
 
