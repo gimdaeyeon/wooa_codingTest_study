@@ -79,25 +79,29 @@ public class Problem7 {
     }
 
     public static void calculateVisitPoints(List<String> visitors){
-        System.out.println(scoreMap);
         for(String target:visitors){
-            if(friendList.contains(target)){
-                continue;
-            }
-            if (!scoreMap.containsKey(target)){
-                scoreMap.put(target,1);
-            }
-            scoreMap.put(target,scoreMap.get(target)+1);
+            updateScoreMap(target);
         }
-
     }
 
     public static List<String> sortMapByScore(Map<String,Integer> map){
         List<String> list = new ArrayList<>(map.keySet());
 
+//        map의 key를 value 기준으로 내림차순 정렬
         list.sort((o1, o2) -> map.get(o2).compareTo(map.get(o1)));
 
         return list.stream().limit(5).collect(Collectors.toList());
+    }
+
+    public static void updateScoreMap(String name){
+        if(friendList.contains(name)){
+            return;
+        }
+        if (!scoreMap.containsKey(name)){
+            scoreMap.put(name,1);
+            return;
+        }
+        scoreMap.put(name,scoreMap.get(name)+1);
     }
 
 
